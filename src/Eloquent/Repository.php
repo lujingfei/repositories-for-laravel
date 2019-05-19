@@ -107,7 +107,7 @@ abstract class Repository implements RepositoryInterface, DecoratorInterface
      * @param array $data
      * @return bool
      */
-    public function store(array $data)
+    public function save(array $data)
     {
         foreach ($data as $k => $v) {
             $this->model->$k = $v;
