@@ -227,15 +227,15 @@ abstract class Repository implements RepositoryInterface, DecoratorInterface
     {
         if ($this->preventDecoratorOverwriting) {
             // Find existing criteria
-            $key = $this->decorator->search(function ($item) use ($decorator) {
+            $key = $this->decorators->search(function ($item) use ($decorator) {
                 return (is_object($item) && (get_class($item) == get_class($decorator)));
             });
             // Remove old criteria
             if (is_int($key)) {
-                $this->decorator->offsetUnset($key);
+                $this->decorators->offsetUnset($key);
             }
         }
-        $this->decorator->push($decorator);
+        $this->decorators->push($decorator);
         return $this;
     }
 
@@ -246,7 +246,7 @@ abstract class Repository implements RepositoryInterface, DecoratorInterface
     {
         if ($this->skipDecorator === true)
             return $this;
-        foreach ($this->getDecorator() as $decorator) {
+        foreach ($this->getDecorators() as $decorator) {
             if ($decorator instanceof Decorator)
                 $this->model = $decorator->apply($this->model, $this);
         }
